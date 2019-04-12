@@ -5,12 +5,9 @@ authors = ["Kelly McLaughlin <kelly.mclaughlin@joyent.com>"]
 edition = "2018"
 
 [dependencies]
-
-# cueball = { git = 'https://github.com/joyent/rust-cueball' }
-cueball = { path = '/home/kelly/joyent/repos/rust-cueball' }
+cueball = { git = 'https://github.com/joyent/rust-cueball' }
 
 [dev-dependencies]
-# cueball-tcp-stream-connection = { git = 'https://github.com/joyent/rust-cueball-tcp-stream-connection' }
-cueball-tcp-stream-connection = { path = '/home/kelly/joyent/repos/cueball-tcp-stream-connection' }
+cueball-tcp-stream-connection = { git = 'https://github.com/joyent/cueball-tcp-stream-connection' }
 slog = "2.4.1"
 slog-term = "2.4.0"

@@ -31,7 +31,7 @@ impl Resolver for StaticIpResolver {
     fn start(&mut self, s: Sender<BackendMsg>) {
         if !self.started {
             self.backends.iter().for_each(|b| {
-                let backend = Backend::new(&b.0, &b.1);
+                let backend = Backend::new(&b.0, b.1);
                 let backend_key = srv_key(&backend);
                 let backend_msg =
                     BackendMsg::AddedMsg(

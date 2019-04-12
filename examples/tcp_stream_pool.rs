@@ -33,13 +33,11 @@ fn main() {
     );
 
     let pool_opts = ConnectionPoolOptions::<StaticIpResolver> {
-        domain: String::from("abc.com"),
-        spares: 3,
         maximum: 5,
-        service: None,
         claim_timeout: None,
         resolver: resolver,
-        log: &log
+        log: log,
+        rebalancer_action_delay: None
     };
 
     let _pool = ConnectionPool::<TcpStreamWrapper, StaticIpResolver>::new(pool_opts);
