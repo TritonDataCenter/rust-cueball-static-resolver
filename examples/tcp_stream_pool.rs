@@ -10,6 +10,7 @@ use std::sync::Mutex;
 
 use slog::{Drain, Logger, o};
 
+use cueball::backend::Backend;
 use cueball::connection_pool::ConnectionPool;
 use cueball::connection_pool::types::ConnectionPoolOptions;
 use cueball_static_resolver::StaticIpResolver;
@@ -32,15 +33,18 @@ fn main() {
         o!("build-id" => "0.1.0")
     );
 
-    let pool_opts = ConnectionPoolOptions::<StaticIpResolver> {
+    let pool_opts = ConnectionPoolOptions {
         maximum: 5,
         claim_timeout: None,
-        resolver: resolver,
         log: log,
         rebalancer_action_delay: None
     };
 
-    let _pool = ConnectionPool::<TcpStreamWrapper, StaticIpResolver>::new(pool_opts);
+    let _pool = ConnectionPool::<TcpStreamWrapper, StaticIpResolver, fn(&Backend) -> TcpStreamWrapper>::new(
+        pool_opts,
+        resolver,
+        TcpStreamWrapper::new
+    );
 
     println!("Cueball!");
 
