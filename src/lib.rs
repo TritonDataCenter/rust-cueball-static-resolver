@@ -1,19 +1,14 @@
-/*
- * Copyright 2019 Joyent, Inc.
- */
+// Copyright 2019 Joyent, Inc.
 
 use std::sync::mpsc::Sender;
 
 use cueball::backend::*;
 use cueball::resolver::{BackendAddedMsg, BackendMsg, Resolver};
-use cueball::error::Error;
-
 
 pub struct StaticIpResolver {
     backends: Vec<(BackendAddress, BackendPort)>,
     pool_tx: Option<Sender<BackendMsg>>,
-    error: Option<Error>,
-    started: bool
+    started: bool,
 }
 
 impl StaticIpResolver {
@@ -21,8 +16,7 @@ impl StaticIpResolver {
         StaticIpResolver {
             backends: backends,
             pool_tx: None,
-            error: None,
-            started: false
+            started: false,
         }
     }
 }
@@ -33,12 +27,10 @@ impl Resolver for StaticIpResolver {
             self.backends.iter().for_each(|b| {
                 let backend = Backend::new(&b.0, b.1);
                 let backend_key = srv_key(&backend);
-                let backend_msg =
-                    BackendMsg::AddedMsg(
-                        BackendAddedMsg {
-                            key: backend_key,
-                            backend: backend
-                        });
+                let backend_msg = BackendMsg::AddedMsg(BackendAddedMsg {
+                    key: backend_key,
+                    backend: backend,
+                });
                 s.send(backend_msg).unwrap();
             });
             self.pool_tx = Some(s);
@@ -49,14 +41,5 @@ impl Resolver for StaticIpResolver {
     fn stop(&mut self) {
         self.started = false;
         ()
-    }
-
-    fn get_last_error(&self) -> Option<String> {
-        if let Some(err) = &self.error {
-                let err_str = format!("{}", err);
-                Some(err_str)
-        } else {
-            None
-        }
     }
 }
