@@ -22,7 +22,7 @@ impl StaticIpResolver {
 }
 
 impl Resolver for StaticIpResolver {
-    fn start(&mut self, s: Sender<BackendMsg>) {
+    fn run(&mut self, s: Sender<BackendMsg>) {
         if !self.started {
             self.backends.iter().for_each(|b| {
                 let backend = Backend::new(&b.0, b.1);
@@ -36,10 +36,5 @@ impl Resolver for StaticIpResolver {
             self.pool_tx = Some(s);
             self.started = true;
         }
-    }
-
-    fn stop(&mut self) {
-        self.started = false;
-        ()
     }
 }
