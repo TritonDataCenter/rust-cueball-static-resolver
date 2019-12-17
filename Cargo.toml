@@ -1,13 +1,13 @@
 [package]
 name = "cueball-static-resolver"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Kelly McLaughlin <kelly.mclaughlin@joyent.com>"]
 edition = "2018"
 
 [dependencies]
-cueball = { git = 'https://github.com/joyent/rust-cueball', tag = "v0.2.1" }
+cueball = { git = 'https://github.com/joyent/rust-cueball', branch = "master" }
 
 [dev-dependencies]
-cueball-tcp-stream-connection = { git = 'https://github.com/joyent/cueball-tcp-stream-connection', tag = "v0.1.1" }
+cueball-tcp-stream-connection = { git = 'https://github.com/joyent/cueball-tcp-stream-connection', tag = "v0.2.0" }
 slog = "2.4.1"
 slog-term = "2.4.0"
